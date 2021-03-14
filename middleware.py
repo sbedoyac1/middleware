@@ -1,11 +1,16 @@
 from werkzeug.wrappers import Request, Response, ResponseStream
 array = ['1','2','3']
 
+def readMessage():
+        f = open ('messages.txt','r')
+        messages = f.read()
+        print(messages)
+        f.close()
+
 class middleware():
     '''
     Simple WSGI middleware
     '''
-    
 
     def __init__(self, app):
         self.app = app
@@ -35,3 +40,7 @@ class middleware():
 
         res = Response(u'Authorization failed', mimetype= 'text/plain', status=401)
         return res(environ, start_response)
+
+
+if __name__ == "__main__":
+    readMessage()
