@@ -1,15 +1,17 @@
 from werkzeug.wrappers import Request, Response, ResponseStream
+array = ['1','2','3']
 
 class middleware():
     '''
     Simple WSGI middleware
     '''
+    
 
     def __init__(self, app):
         self.app = app
         self.userName = ['pepe','juan']
         self.password = 'IamIronMan'
-        self.tipo = ['cola','canal']
+        #self.tipo = ['cola','canal']
 
     def __call__(self, environ, start_response):
         request = Request(environ)
@@ -21,8 +23,14 @@ class middleware():
         # verify the username and password from some database or env config variable
                 
         if userName in self.userName:
-            if password == self.password:
-                environ['user'] = { 'name': ['cola','canal'] , 'hello' : 'canal'}
+            if password == self.password:                
+                print(array)
+                if array:
+                    aux = array[0]
+                    array.pop(0)    
+                else:
+                    aux = 'No hay mas elementos'                    
+                environ['user'] = { 'name': aux }   
                 return self.app(environ, start_response)
 
         res = Response(u'Authorization failed', mimetype= 'text/plain', status=401)
