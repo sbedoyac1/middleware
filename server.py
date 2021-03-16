@@ -5,7 +5,7 @@ app = Flask('DemoApp')
 
 # calling our middleware
 app.wsgi_app = middleware(app.wsgi_app)
-array = ['1','2','3']
+#array = ['1','2','3']
 
 @app.route('/', methods=['GET', 'POST'])
 def hello():
