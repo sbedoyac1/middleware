@@ -1,8 +1,13 @@
 from werkzeug.wrappers import Request, Response, ResponseStream
 from os import remove
 
+# def credentials():
+#     f = open ('messages0.txt','r')
+#     messages = f.readlines()
+#     array = messages
+
 def readMessages():
-    f = open ('messages.txt','r')
+    f = open ('messages0.txt','r')
     messages = f.readlines()
     array = messages
     print(messages)
@@ -12,11 +17,11 @@ def readMessages():
 
 
 def deleteline():
-    a_file = open("messages.txt", "r")
+    a_file = open("messages0.txt", "r")
     lines = a_file.readlines()
     a_file.close()
     del lines[0]
-    new_file = open("messages.txt", "w+")
+    new_file = open("messages0.txt", "w+")
     for line in lines:
         new_file.write(line)
     new_file.close()
@@ -27,7 +32,7 @@ class middleware():
     '''
     Simple WSGI middleware
     '''
-
+    # self.userName,self.password = credentials()
     def __init__(self, app):
         self.app = app
         self.userName = ['pepe','juan']
@@ -53,7 +58,7 @@ class middleware():
                 else:
                     aux = 'No hay mas elementos' 
                     array = readMessages()            
-                environ['user'] = { 'name': aux }   
+                environ['user'] = { 'name': aux }
                 return self.app(environ, start_response)
             
         
