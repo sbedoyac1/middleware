@@ -1,5 +1,5 @@
 def createUsers():
-    option = input("Ingrese o registrese: ")
+    option = input("Ingrese o registrese: \n('registrar': para añadir un usuario nuevo)\n('ingrese':para iniciar sesion)\n: ")
     if option=='registrar':
         username= str(input("Ingrese el username a registrar: "))
         fRead = open('usuario.txt', 'r')
@@ -20,27 +20,31 @@ def createUsers():
         f2.close()
         
         f3 = open('colas.txt', 'r')
-        messages = f3.readlines()
+        stack = f3.readlines()
         f3.close()
         print('Las colas disponibles son: \n')
-        for i in messages:
+        for i in stack:
             print('Cola', i)
         cola = ''
         aux=[]
         while (cola != 'exit'):
             cola = str(input("Ingrese las cola a la que se quiere susbcribir (escriba exit para salir): "))
-            aux.append(cola)
-            f = open('suscriptoresMessages'+ cola + '.txt', 'a')
-            f4 = open('suscriptoresMessages'+ cola + '.txt', 'r')
-            messages = f4.readlines()
-            f4.close()
-            if username in messages:
-                print(username)
-                print("Ya se encuentra suscrito a la cola")
+            if cola+'\n' in stack:
+                aux.append(cola)
+                f = open('suscriptoresMessages'+ cola + '.txt', 'a')
+                f4 = open('suscriptoresMessages'+ cola + '.txt', 'r')
+                messages = f4.readlines()
+                f4.close()
+                if username in messages:
+                    print(username)
+                    print("Ya se encuentra suscrito a la cola")
+                else:
+                    print('Ususario suscrito a la cola ', cola)
+                    if(cola != 'exit'):
+                        f.write(username)
             else:
-                print('Ususario suscrito a la cola ', cola)
-                if(cola != 'exit'):
-                    f.write(username)
+                print('La cola no existe')
+                exit()
         print(aux)           
         aux.pop(len(aux)-1)
         print(aux)
@@ -54,11 +58,15 @@ def createUsers():
             f.write('\n')
             f.close()
     elif(option=='ingrese'):
-        username= str(input("Ingrese el usuario: "))
-        username = username + '\n'
-        fRead = open('usuario.txt', 'r')
-        usuarios = fRead.readlines()
-        fRead.close()
+        try:
+            username= str(input("Ingrese el usuario: "))
+            username = username + '\n'
+            fRead = open('usuario.txt', 'r')
+            usuarios = fRead.readlines()
+            fRead.close()
+        except :
+            print("No existe el usuario")
+            exit()        
         pos=0
         aux=-1
         for i in usuarios:
@@ -77,37 +85,38 @@ def createUsers():
         fRead = open('contraseña.txt', 'r')
         contraseña = fRead.readlines()
         fRead.close()
-        print(contraseña)
         if((password+'\n')==contraseña[aux]):
             print("Contraseña correcta")
             
             f3 = open('colas.txt', 'r')
-            messages = f3.readlines()
+            stack = f3.readlines()
             f3.close()
             print('Las colas disponibles son: \n')
-            for i in messages:
+            for i in stack:
                 print('Cola', i)
             cola = ''
             aux=[]
             while (cola != 'exit'):
                 cola = str(input("Ingrese las cola a la que se quiere susbcribir (escriba exit para salir): "))
-                aux.append(cola)
-                f = open('suscriptoresMessages'+ cola + '.txt', 'a')
-                f4 = open('suscriptoresMessages'+ cola + '.txt', 'r')
-                messages = f4.readlines()
-                f4.close()
-                if username in messages:
-                    print(username)
-                    print("Ya se encuentra suscrito a la cola")
+                if cola+'\n' in stack:
+                    aux.append(cola)
+                    f = open('suscriptoresMessages'+ cola + '.txt', 'a')
+                    f4 = open('suscriptoresMessages'+ cola + '.txt', 'r')
+                    messages = f4.readlines()
+                    f4.close()
+                    if username in messages:
+                        print(username)
+                        print("Ya se encuentra suscrito a la cola")
+                    else:
+                        print('Ususario suscrito a la cola ', cola)
+                        if(cola != 'exit'):
+                            f.write(username)
                 else:
-                    print('Ususario suscrito a la cola ', cola)
-                    if(cola != 'exit'):
-                        f.write(username)
-
+                    print('La cola no existe')
+                    exit()
         else:
             print("Contraseña incorrecta")
             exit()
-
     else:
         print("Opcion no reconocida")
     

@@ -36,12 +36,16 @@ def fillArray():
             for i in messages:
                 print('Cola', i)
             cola = str(input("Ingrese el numero de la cola a la que va a agegar elementos:"))
-            f2 = open('messages' + str(cola) + '.txt', 'a')
-            print('Escribiendo sobre cola ',cola)
-            while(message!='exit'):
-                message= str(input("Ingrese el mensaje o exit para salir:"))
-                if(message != 'exit'):
-                    f2.write(message+'\n')
+            if (cola+'\n') in messages:
+                f2 = open('messages' + str(cola) + '.txt', 'a')
+                print('Escribiendo sobre cola ',cola)
+                while(message!='exit'):
+                    message= str(input("Ingrese el mensaje o exit para salir:"))
+                    if(message != 'exit'):
+                        f2.write(message+'\n')
+            else:
+                print("La cola no existe")
+                exit()
         except:
             print("Error añadiendo el elemento")    
     else:
