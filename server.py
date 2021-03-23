@@ -25,7 +25,7 @@ def hello():
             pass
         iter+=1
     print('Hola %s, Las colas a las que se encuentra subscrito son: \n'%user['name'] )
-    for i in subcripciones:
+    for i in colas:
         print('Cola', i)
 
     consumir = input("Ingrese la cola que desea consumir: ")
